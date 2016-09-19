@@ -1,8 +1,6 @@
 import numpy as np
-import plotly.plotly as py
-import plotly.graph_objs as go
 import random
-
+import visualization as v
 def useLever(b_levers,a):
     noise = np.random.normal(0.0,1.0,1)
     return b_levers[a]+noise
@@ -19,10 +17,11 @@ def calcQ_t(R_t, timesLeverused):
     return div0(np.sum(R_t,1),timesLeverused)
 
 def greedyDecision(Q_t,eps):
-    #greedily chose lever with highest index
+    #if our exploration probability is zero, greedily chose lever with highest index
     if eps == 0:
         return np.argmax(Q_t)
     else:
+    #otherwise explore with probability eps
         explore = np.random.binomial(1,eps,1)
         if(explore == 1):
            return random.randint(0,9)
@@ -53,88 +52,18 @@ def testbed(eps):
             avgReward[t,i] = np.sum(R_t)/(t+1)
     return (avgReward,bestLeverused)
 #generate banditlevers
-avg_x = np.linspace(0,1000,1000)
 (avgReward,bL) = testbed(0)
 (avgRewardg1,bL1) = testbed(0.1)
 (avgRewardg2,bL2) = testbed(0.01)
 
-
-
-avgAvgReward = np.average(avgReward,1)
-trace1 = go.Scatter(
-    x = avg_x,
-    y = avgAvgReward,
-    mode = 'lines+markers',
-    name = 'Greedy',
-    marker= dict(
-        size = 2,
-        color = 'green'
-    )
-)
-avgAvgRewardg1 = np.average(avgRewardg1,1)
-trace2= go.Scatter(
-    x = avg_x,
-    y = avgAvgRewardg1,
-    mode = 'lines+markers',
-    name = 'epsilon = 0.1',
-    marker= dict(
-        size = 2,
-        color = 'black'
-    )
-)
-avgAvgRewardg2 = np.average(avgRewardg2,1)
-trace3 = go.Scatter(
-    x = avg_x,
-    y = avgAvgRewardg2,
-    mode = 'lines+markers',
-    name = 'epsilon = 0.01',
-    marker= dict(
-        size = 2,
-        color = 'red'
-    )
-)
-
-avgbL = np.average (bL,1)
-avgbL1 = np.average(bL1,1)
-avgbL2 = np.average(bL2,1)
-trace4 = go.Scatter(
-    x = avg_x,
-    y = avgbL,
-    mode = 'lines+markers',
-    name = 'Greedy',
-    marker= dict(
-        size = 2,
-        color = 'green'
-    )
-)
-trace5= go.Scatter(
-    x = avg_x,
-    y = avgbL1,
-    mode = 'lines+markers',
-    name = 'epsilon = 0.1',
-    marker= dict(
-        size = 2,
-        color = 'black'
-    )
-)
-trace6 = go.Scatter(
-    x = avg_x,
-    y = avgbL2,
-    mode = 'lines+markers',
-    name = 'epsilon = 0.01',
-    marker= dict(
-        size = 2,
-        color = 'red'
-    )
-)
-
-data = [trace1,trace2,trace3]
-data2 = [trace4,trace5,trace6]
-py.plot(data,filename='avgReward')
-py.plot(data2,filename='avgBestDecision')
-
+avgRew  = [(avgReward,'greedy','green'),(avgRewardg1,'0.1','black'),(avgRewardg2,'0.01','red')]
+avgBL   = [(bL,'greedy','green'),(bL1,'0.1','black'),(bL2,'0.01','red')]
+v.vis(avgRew,avgBL)
 
 
 #visualize
+
+
+
 
 
