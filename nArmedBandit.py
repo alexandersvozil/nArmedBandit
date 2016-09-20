@@ -30,7 +30,7 @@ def greedyDecision(Q_t,eps,temp):
             return np.argmax(Q_t)
 
 
-def testbed(eps,temp,levers,testbedNr):
+def testbed(eps,temp,levers,testbedNr,randomWalks,stepsize):
     avgReward = np.zeros((1000,testbedNr))
     bestLeverused = np.zeros((1000,testbedNr))
     for i in range(0,testbedNr):
@@ -40,13 +40,20 @@ def testbed(eps,temp,levers,testbedNr):
         Q_t = np.zeros(10)
         rewardsum = 0
         for t in range(0, 1000):
+            #if we enable random walk change levers every 30th time we pull on a lever
+            if(randomWalks and ((t+1) % 200 == 0)):
+                b_levers = np.random.standard_normal(10)
+                optimal_lever = np.argmax(b_levers)
 
             #choose lever
             a  = greedyDecision(Q_t,eps,temp)
             reward = useLever(b_levers,a)
             #calculate Q_t
             times[a] = times[a]+1
-            Q_t = calcQ_t(Q_t,a,reward,(1/times[a]))
+            if(stepsize == 0):
+                Q_t = calcQ_t(Q_t,a,reward,(1/times[a]))
+            if(stepsize > 0):
+                Q_t = calcQ_t(Q_t,a,reward,stepsize)
             #for the graphs
             rewardsum += reward
 
@@ -59,15 +66,26 @@ def testbed(eps,temp,levers,testbedNr):
 testbedNr =200
 levers = np.random.standard_normal((10,testbedNr))
 #generate testbeds
-(avgReward,bL) = testbed(0,0,levers,testbedNr)
-(avgRewardg1,bL1) = testbed(0.1,0,levers,testbedNr)
-(avgRewardg2,bL2) = testbed(0.01,0,levers,testbedNr)
-(avgRewardg3,bL3) = testbed(0.1,1,levers,testbedNr)
+#(avgReward,bL) = testbed(0,0,levers,testbedNr,False,0)
+#(avgRewardg1,bL1) = testbed(0.1,0,levers,testbedNr,False,0)
+#(avgRewardg2,bL2) = testbed(0.01,0,levers,testbedNr,False,0)
+#(avgRewardg3,bL3) = testbed(0.1,1,levers,testbedNr,False,0)
+#(avgRewardg4,bL4) = testbed(0.1,1,levers,testbedNr,False,0.1)
+#
+#avgRew  = [(avgReward,'greedy','green'),(avgRewardg1,'0.1','black'),(avgRewardg2,'0.01','red'),(avgRewardg3,'0.1+boltz','orange'), (avgRewardg4,'0.1+boltz+constantstep','magenta')]
+#avgBL   = [(bL,'greedy','green'),(bL1,'0.1','black'),(bL2,'0.01','red'),(bL3,'0.1+boltz','orange'),(bL4, '0.1+boltz+constantstep', 'magenta')]
+#avgRew  = [(avgReward,'greedy','green'),(avgRewardg1,'0.1','black'),(avgRewardg2,'0.01','red'),(avgRewardg3,'0.1+boltz','orange')]
+#avgBL   = [(bL,'greedy','green'),(bL1,'0.1','black'),(bL2,'0.01','red'),(bL3,'0.1+boltz','orange')]
+#v.vis_matplot(avgRew,avgBL)
 
-avgRew  = [(avgReward,'greedy','green'),(avgRewardg1,'0.1','black'),(avgRewardg2,'0.01','red'),(avgRewardg3,'0.1+boltz','orange')]
-avgBL   = [(bL,'greedy','green'),(bL1,'0.1','black'),(bL2,'0.01','red'),(bL3,'0.1+boltz','orange')]
+(avgReward,bL) = testbed(0,0,levers,testbedNr,True,0)
+(avgRewardg1,bL1) = testbed(0.1,0,levers,testbedNr,True,0)
+(avgRewardg2,bL2) = testbed(0.01,0,levers,testbedNr,True,0)
+(avgRewardg3,bL3) = testbed(0.1,1,levers,testbedNr,True,0)
+(avgRewardg4,bL4) = testbed(0.1,1,levers,testbedNr,True,0.3)
+avgRew  = [(avgReward,'greedy','green'),(avgRewardg1,'0.1','black'),(avgRewardg2,'0.01','red'),(avgRewardg3,'0.1+boltz','orange'), (avgRewardg4,'0.1+boltz+constantstep','magenta')]
+avgBL   = [(bL,'greedy','green'),(bL1,'0.1','black'),(bL2,'0.01','red'),(bL3,'0.1+boltz','orange'),(bL4, '0.1+boltz+constantstep', 'magenta')]
 v.vis_matplot(avgRew,avgBL)
-
 
 #visualize
 
