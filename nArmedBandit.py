@@ -63,7 +63,7 @@ def testbed(eps,temp,levers,testbedNr,randomWalks,stepsize):
      #   print "eps: " +str(eps)+ "\nQ_T: " + str(Q_t) + "\nLevers: " + str(b_levers)
     return (avgReward,bestLeverused)
 
-testbedNr =200
+testbedNr =400
 levers = np.random.standard_normal((10,testbedNr))
 #generate testbeds
 (avgReward,bL) = testbed(0,0,levers,testbedNr,False,0)
