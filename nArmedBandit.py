@@ -66,26 +66,24 @@ def testbed(eps,temp,levers,testbedNr,randomWalks,stepsize):
 testbedNr =200
 levers = np.random.standard_normal((10,testbedNr))
 #generate testbeds
-#(avgReward,bL) = testbed(0,0,levers,testbedNr,False,0)
-#(avgRewardg1,bL1) = testbed(0.1,0,levers,testbedNr,False,0)
-#(avgRewardg2,bL2) = testbed(0.01,0,levers,testbedNr,False,0)
-#(avgRewardg3,bL3) = testbed(0.1,1,levers,testbedNr,False,0)
-#(avgRewardg4,bL4) = testbed(0.1,1,levers,testbedNr,False,0.1)
-#
-#avgRew  = [(avgReward,'greedy','green'),(avgRewardg1,'0.1','black'),(avgRewardg2,'0.01','red'),(avgRewardg3,'0.1+boltz','orange'), (avgRewardg4,'0.1+boltz+constantstep','magenta')]
-#avgBL   = [(bL,'greedy','green'),(bL1,'0.1','black'),(bL2,'0.01','red'),(bL3,'0.1+boltz','orange'),(bL4, '0.1+boltz+constantstep', 'magenta')]
-#avgRew  = [(avgReward,'greedy','green'),(avgRewardg1,'0.1','black'),(avgRewardg2,'0.01','red'),(avgRewardg3,'0.1+boltz','orange')]
-#avgBL   = [(bL,'greedy','green'),(bL1,'0.1','black'),(bL2,'0.01','red'),(bL3,'0.1+boltz','orange')]
-#v.vis_matplot(avgRew,avgBL)
+(avgReward,bL) = testbed(0,0,levers,testbedNr,False,0)
+(avgRewardg1,bL1) = testbed(0.1,0,levers,testbedNr,False,0)
+(avgRewardg2,bL2) = testbed(0.01,0,levers,testbedNr,False,0)
+(avgRewardg3,bL3) = testbed(0.1,1,levers,testbedNr,False,0)
+(avgRewardg4,bL4) = testbed(0.1,1,levers,testbedNr,False,0.1)
 
-(avgReward,bL) = testbed(0,0,levers,testbedNr,True,0)
-(avgRewardg1,bL1) = testbed(0.1,0,levers,testbedNr,True,0)
-(avgRewardg2,bL2) = testbed(0.01,0,levers,testbedNr,True,0)
-(avgRewardg3,bL3) = testbed(0.1,1,levers,testbedNr,True,0)
-(avgRewardg4,bL4) = testbed(0.1,1,levers,testbedNr,True,0.3)
 avgRew  = [(avgReward,'greedy','green'),(avgRewardg1,'0.1','black'),(avgRewardg2,'0.01','red'),(avgRewardg3,'0.1+boltz','orange'), (avgRewardg4,'0.1+boltz+constantstep','magenta')]
 avgBL   = [(bL,'greedy','green'),(bL1,'0.1','black'),(bL2,'0.01','red'),(bL3,'0.1+boltz','orange'),(bL4, '0.1+boltz+constantstep', 'magenta')]
 v.vis_matplot(avgRew,avgBL)
+
+#(avgReward,bL) = testbed(0,0,levers,testbedNr,True,0)
+#(avgRewardg1,bL1) = testbed(0.1,0,levers,testbedNr,True,0)
+#(avgRewardg2,bL2) = testbed(0.01,0,levers,testbedNr,True,0)
+#(avgRewardg3,bL3) = testbed(0.1,1,levers,testbedNr,True,0)
+#(avgRewardg4,bL4) = testbed(0.1,1,levers,testbedNr,True,0.3)
+#avgRew  = [(avgReward,'greedy','green'),(avgRewardg1,'0.1','black'),(avgRewardg2,'0.01','red'),(avgRewardg3,'0.1+boltz','orange'), (avgRewardg4,'0.1+boltz+constantstep','magenta')]
+#avgBL   = [(bL,'greedy','green'),(bL1,'0.1','black'),(bL2,'0.01','red'),(bL3,'0.1+boltz','orange'),(bL4, '0.1+boltz+constantstep', 'magenta')]
+#v.vis_matplot(avgRew,avgBL)
 
 #visualize
 
