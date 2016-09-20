@@ -1,6 +1,27 @@
 import plotly.plotly as py
 import plotly.graph_objs as go
 import numpy as np
+import matplotlib.pyplot as plt
+
+def vis_matplot(avgReward,avgBL):
+    data_rew = list()
+    data_bl = list()
+
+    avg_x = np.linspace(0,1000,1000)
+
+    for (avgR,name,color) in avgReward:
+        avgAvgR = np.average(avgR,1)
+        plt.plot(avg_x,avgAvgR,c=color,linewidth=2,label=name)
+    plt.legend()
+    plt.show()
+
+
+    for (abl,name,color) in avgBL:
+        avgAvgBL = np.average(abl,1)
+        plt.plot(avg_x,avgAvgBL,c=color,linewidth=2,label=name)
+    plt.legend()
+    plt.show()
+    return
 
 def vis(avgReward,avgBL):
     data_rew = list()
@@ -34,5 +55,5 @@ def vis(avgReward,avgBL):
             )
         )
         data_bl.append(trace)
-    py.plot(data_rew,filename='avgReward')
-    py.plot(data_bl,filename='avgBestDecision')
+    py.image.save_as(data_rew,filename='avgReward.png')
+    py.image.save_as(data_bl,filename='avgBestDecision.png')
